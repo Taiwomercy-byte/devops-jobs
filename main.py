@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 
 # ---------------- CONFIG ----------------
 EMAIL = "ajayitaiwomercy@gmail.com"
-APP_PASSWORD = "l0v3&L1ghT"
+APP_PASSWORD = "mwzw iokd hdob jday"
 TO_EMAIL = "ajayitaiwomercy@gmail.com"
 
 # ----------------------------------------
