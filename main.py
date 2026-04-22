@@ -8,7 +8,7 @@ from playwright.sync_api import sync_playwright
 
 # ---------------- CONFIG ----------------
 EMAIL = os.environ["EMAIL"]
-APP_PASSWORD = os.environ["import requests
+APP_PASSWORD = os.environ["import requests"]
 import smtplib
 import os
 from email.mime.text import MIMEText
@@ -18,7 +18,7 @@ from playwright.sync_api import sync_playwright
 
 # ---------------- CONFIG ----------------
 EMAIL = os.environ["EMAIL"]
-APP_PASSWORD = os.environ["mwzwiokdhdobjday"]
+APP_PASSWORD = os.environ["APP_PASSWORD"]
 TO_EMAIL = "ajayitaiwomercy@gmail.com"
 # ----------------------------------------
 
