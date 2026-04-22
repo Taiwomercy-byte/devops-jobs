@@ -2,7 +2,7 @@ name: AI DevOps Job Engine
 
 on:
   schedule:
-    - cron: "0 9 * * *"   # 10AM Nigeria time
+    - cron: "0 9 * * *"   # 10AM Nigeria time (UTC+1)
   workflow_dispatch:
 
 jobs:
@@ -22,10 +22,17 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests playwright
+          pip install --no-cache-dir requests playwright
 
       - name: Install Playwright browsers
-        run: playwright install --with-deps
+        run: |
+          playwright install --with-deps
+
+      - name: Debug env (safe)
+        run: |
+          echo "EMAIL is set"
+          echo "APP_PASSWORD length check"
+          python -c "import os; print(len(os.environ.get('APP_PASSWORD', '')))"
 
       - name: Run job engine
         env:
