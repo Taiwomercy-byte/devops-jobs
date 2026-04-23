@@ -1,38 +1,44 @@
-name: AI DevOps Job Engine
+name: DevOps Job Engine
 
 on:
   schedule:
-    - cron: "0 9 * * *"   # 10AM Nigeria time (UTC+1)
-  workflow_dispatch:
+    - cron: "0 8 * * 1-5"   # 9AM Nigeria time (UTC+1), weekdays only
+  workflow_dispatch:         # Manual trigger for testing
 
 jobs:
   run-job-engine:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: ${{ runner.os }}-pip-
+
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install --no-cache-dir requests playwright
+          pip install requests playwright
 
       - name: Install Playwright browsers
-        run: |
-          playwright install --with-deps
+        run: playwright install chromium --with-deps
 
-      - name: Debug env (safe)
+      - name: Verify secrets are set
         run: |
-          echo "EMAIL is set"
-          echo "APP_PASSWORD length check"
-          python -c "import os; print(len(os.environ.get('APP_PASSWORD', '')))"
+          if [ -z "${{ secrets.EMAIL }}" ]; then echo "ERROR: EMAIL secret not set"; exit 1; fi
+          if [ -z "${{ secrets.APP_PASSWORD }}" ]; then echo "ERROR: APP_PASSWORD secret not set"; exit 1; fi
+          echo "Secrets verified OK"
 
       - name: Run job engine
         env:
