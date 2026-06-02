@@ -18,13 +18,15 @@ MAX_RESULTS = 10       # Increased from 5
 # ----------------------------------------
 
 DEVOPS_TITLE_KEYWORDS = [
-    "devops", "sre", "platform engineer", "cloud engineer",
+    "backend developer", "backend engineer", "devops", "sre", "platform engineer", "cloud engineer",
     "infrastructure engineer", "devsecops", "reliability engineer",
     "site reliability", "mlops", "cloud ops"
 ]
 
 TECH_STACK_KEYWORDS = [
-    "aws", "gcp", "azure", "docker", "kubernetes", "k8s",
+    "aws", "node.js", "typescript", "javascript", "nest.js", "restful api design",
+     "express.js", "postgresql", "prisma orm", "mongodb", "jwt", "oauth", "rbac", 
+    "owasp api security", "gcp", "azure", "docker", "kubernetes", "k8s",
     "terraform", "ansible", "ci/cd", "jenkins", "github actions",
     "linux", "python", "go", "golang", "helm", "prometheus",
     "grafana", "datadog", "argocd", "vault", "istio", "pulumi"
@@ -51,11 +53,11 @@ def score_job(job: dict) -> int:
     combined = title + " " + description + " " + " ".join(tags)
 
     # Title relevance (up to 4 pts)
-    if any(x in title for x in ["devops", "devsecops", "sre"]):
+    if any(x in title for x in ["devops", "devsecops", "backend developer"]):
         score += 4
     elif any(x in title for x in ["platform", "cloud engineer", "infrastructure"]):
         score += 3
-    elif any(x in title for x in ["mlops", "cloud ops", "reliability"]):
+    elif any(x in title for x in ["backend engineer", "cloud ops", "reliability"]):
         score += 2
 
     # Tech stack match (up to 4 pts, 1pt each, capped)
